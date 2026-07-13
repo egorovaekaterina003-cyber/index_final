@@ -605,19 +605,14 @@ function buyPackage(pkgIdx) {
 
   sendToGoogleSheet({
     event: 'buy_click',
-    package: pkgIdx + 1,
-    package_name: packages[pkgIdx].name,
-    window: windowIndex + 1,
-    price_rub: w.rub,
-    price_eur: w.eur,
-    wheel_discount_rub: wheelDisc,
-    wheel_discount_eur: wheelDiscEur,
-    guides_discount_rub: guidesRub,
-    guides_discount_eur: guidesEur,
-    final_price_rub: finalRubVal,
-    final_price_eur: finalEurVal,
-    user: user,
-    ts: new Date().toISOString()
+    package: packages[pkgIdx].name,
+    win: windowIndex + 1,
+    currency: cur === 'eur' ? '€' : '₽',
+    price: cur === 'eur' ? w.eur : w.rub,
+    disc: cur === 'eur' ? wheelDiscEur : wheelDisc,
+    final_price: cur === 'eur' ? finalEurVal : finalRubVal,
+    user_id: user.id || '',
+    username: user.username || ''
   });
 
   const botHelpLink = buildBotHelpLink({
