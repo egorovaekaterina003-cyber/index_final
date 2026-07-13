@@ -572,12 +572,11 @@ document.querySelectorAll('.wheel-opt').forEach(o => {
 function sendToGoogleSheet(payload) {
   if (!GOOGLE_SHEET_WEBHOOK_URL) return;
   try {
-    fetch(GOOGLE_SHEET_WEBHOOK_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify(payload)
-    }).catch(() => {});
+    var qs = Object.keys(payload).map(function(k) {
+      return encodeURIComponent(k) + '=' + encodeURIComponent(payload[k] || '');
+    }).join('&');
+    var url = GOOGLE_SHEET_WEBHOOK_URL + '?' + qs;
+    fetch(url, { method: 'GET', mode: 'no-cors' }).catch(function() {});
   } catch (e) {}
 }
 
