@@ -174,6 +174,8 @@
   .sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:100;padding:12px 16px 28px;background:linear-gradient(to top,var(--bg) 60%,transparent);}
   .send-btn{width:100%;padding:16px 20px;border-radius:var(--radius);background:var(--red);color:#fff;border:none;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:800;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:space-between;text-transform:uppercase;letter-spacing:0.05em;}
   .send-btn:active{transform:scale(0.98);opacity:0.9;}
+  .send-btn.disabled{background:var(--text-3);cursor:not-allowed;opacity:0.5;}
+  .send-btn.disabled:active{transform:none;opacity:0.5;}
   .btn-left{display:flex;flex-direction:column;align-items:flex-start;gap:2px;}
   .btn-pkg{font-size:9px;font-weight:700;opacity:0.7;letter-spacing:0.1em;}
   .btn-price{font-family:'Montserrat',sans-serif;font-size:20px;font-weight:900;}
@@ -300,11 +302,11 @@
   <div class="email-sub">Нужен для чека — введи тот же email что укажешь при оплате в Robokassa или Stripe.</div>
   <input class="email-input" id="email-input" type="email" placeholder="example@mail.ru" oninput="onEmailInput()">
   <div class="email-hint" id="email-hint"></div>
-  <button class="email-save-btn" id="email-save-btn" onclick="saveAndGo()">Сохранить и перейти к оплате →</button>
+  <button class="email-save-btn" id="email-save-btn" onclick="saveEmail()">Сохранить ✓</button>
 </div>
 </div>
 
-  <button class="send-btn" onclick="sendToBot()">
+  <button class="send-btn disabled" id="send-btn" onclick="sendToBot()">
     <div class="btn-left"><div class="btn-pkg" id="btn-pkg-label">Пакет 1 · Без иллюзий</div><div class="btn-price" id="btn-price-label">—</div></div>
     <div class="btn-right">Хочу этот →</div>
   </button>
@@ -652,6 +654,14 @@ function onEmailInput() {
   var valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
   input.classList.toggle('valid', valid);
   input.classList.toggle('invalid', val.length > 0 && !valid);
+
+  // Если пользователь меняет email после сохранения — сбрасываем
+  if (emailSaved) {
+    emailSaved = false;
+    document.getElementById('send-btn').classList.add('disabled');
+    btn.style.display = '';
+  }
+
   if (valid) {
     userEmail = val;
     hint.textContent = '✓ Отлично!';
@@ -670,13 +680,42 @@ function onEmailInput() {
   }
 }
 
-function saveAndGo() {
+var emailSaved = false;
+
+function saveEmail() {
   if (!userEmail) {
-    document.getElementById('email-hint').textContent = 'Сначала введи email';
+    document.getElementById('email-hint').textContent = 'Сначала введи корректный email';
     document.getElementById('email-hint').className = 'email-hint err';
     return;
   }
-  sendParamsToBotHelp();
+  emailSaved = true;
+  // Логируем в Google Sheets
+  var user = getTgUser();
+  var w = packages[pkg].windows[windowIndex];
+  var wheelDisc = getWheelDiscount();
+  var wheelDiscEur = Math.round(wheelDisc / EUR_RATE);
+  var finalRubVal = Math.max(0, w.rub - wheelDisc - guidesRub);
+  var finalEurVal = Math.max(0, w.eur - wheelDiscEur - guidesEur);
+  sendToGoogleSheet({
+    event: 'email_saved',
+    package: packages[pkg].name,
+    win: windowIndex + 1,
+    currency: cur === 'eur' ? '€' : '₽',
+    price: cur === 'eur' ? w.eur : w.rub,
+    disc: cur === 'eur' ? wheelDiscEur : wheelDisc,
+    final_price: cur === 'eur' ? finalEurVal : finalRubVal,
+    email: userEmail,
+    user_id: user.id || '',
+    username: user.username || ''
+  });
+  // Показываем подтверждение
+  var hint = document.getElementById('email-hint');
+  hint.textContent = '✓ Email сохранён — теперь нажми кнопку ниже';
+  hint.className = 'email-hint ok';
+  // Скрываем кнопку сохранения
+  document.getElementById('email-save-btn').style.display = 'none';
+  // Активируем нижнюю кнопку
+  document.getElementById('send-btn').classList.remove('disabled');
 }
 
 // Список гайдов по пакетам
@@ -802,6 +841,8 @@ function sendParamsToBotHelp() {
     final_price: cur === 'eur' ? finalEur : finalRub,
     pay_url: payUrl,
     owned_guides: ownedList,
+    guides_count: Object.keys(selectedGuides).filter(function(k) { return selectedGuides[k]; }).length,
+    guides_disc: cur === 'eur' ? guidesEur : guidesRub,
     email: userEmail
   });
 
@@ -811,6 +852,14 @@ function sendParamsToBotHelp() {
 }
 
 function sendToBot() {
+  if (!emailSaved) {
+    // Скроллим к email-полю и подсвечиваем
+    document.getElementById('email-input').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    var hint = document.getElementById('email-hint');
+    hint.textContent = 'Сначала введи и сохрани email ↑';
+    hint.className = 'email-hint err';
+    return;
+  }
   buyPackage(pkg);
 }
 
