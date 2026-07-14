@@ -616,30 +616,7 @@ function buyPackage(pkgIdx) {
     username: user.username || ''
   });
 
-  const botHelpLink = buildBotHelpLink({
-    package: packages[pkgIdx].name,
-    win: windowIndex + 1,
-    currency: cur === 'eur' ? '€' : '₽',
-    price: cur === 'eur' ? w.eur : w.rub,
-    disc: cur === 'eur' ? wheelDiscEur : wheelDisc,
-    final_price: cur === 'eur' ? finalEurVal : finalRubVal
-  });
-
-  // Выбираем ссылку оплаты
-  const linkKey = cur === 'eur'
-    ? pkgIdx + '_' + wheelDiscEur + '_' + guidesEur
-    : pkgIdx + '_' + wheelDisc + '_' + guidesRub;
-  const payLink = cur === 'eur'
-    ? PAYMENT_LINKS_EUR[linkKey]
-    : PAYMENT_LINKS_RUB[linkKey];
-
-  if (payLink) {
-    window.location.href = payLink;
-  } else if (botHelpLink) {
-    window.location.href = botHelpLink;
-  } else {
-    alert('Ссылка на оплату скоро появится. Сумма: ' + finalRubVal + ' ₽');
-  }
+  sendParamsToBotHelp();
 }
 
 var cur = 'rub', pkg = 2;
@@ -746,20 +723,29 @@ function sendParamsToBotHelp() {
   var w = packages[pkg].windows[windowIndex];
   var wheelDisc = getWheelDiscount();
   var wheelDiscEur = Math.round(wheelDisc / EUR_RATE);
-  var link = buildBotHelpLink({
+  var finalRub = Math.max(0, w.rub - wheelDisc - guidesRub);
+  var finalEur = Math.max(0, w.eur - wheelDiscEur - guidesEur);
+
+  // Находим нужную ссылку на оплату
+  var linkKey = cur === 'eur'
+    ? pkg + '_' + wheelDiscEur + '_' + guidesEur
+    : pkg + '_' + wheelDisc + '_' + guidesRub;
+  var payUrl = cur === 'eur'
+    ? (PAYMENT_LINKS_EUR[linkKey] || '')
+    : (PAYMENT_LINKS_RUB[linkKey] || '');
+
+  var botLink = buildBotHelpLink({
     package: packages[pkg].name,
     win: windowIndex + 1,
     currency: cur === 'eur' ? '€' : '₽',
     price: cur === 'eur' ? w.eur : w.rub,
     disc: cur === 'eur' ? wheelDiscEur : wheelDisc,
-    final_price: cur === 'eur'
-      ? Math.max(0, w.eur - wheelDiscEur - guidesEur)
-      : Math.max(0, w.rub - wheelDisc - guidesRub)
+    final_price: cur === 'eur' ? finalEur : finalRub,
+    pay_url: payUrl
   });
-  if (link) {
-    // Тихая загрузка в фоне через img (обходит CORS)
-    var img = new Image();
-    img.src = link;
+
+  if (botLink) {
+    window.location.href = botLink;
   }
 }
 
