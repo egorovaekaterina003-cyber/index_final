@@ -547,11 +547,12 @@ function getWheelDiscount() {
 }
 function setWheelDiscount(amt) {
   localStorage.setItem('wheelDiscount', amt);
-  document.querySelectorAll('.wheel-opt').forEach(o => {
+  document.querySelectorAll('.wheel-opt').forEach(function(o) {
     o.classList.toggle('active', parseInt(o.dataset.amt, 10) === amt);
   });
   document.getElementById('wheel-saved').classList.add('show');
   render();
+  sendParamsToBotHelp();
 }
 document.querySelectorAll('.wheel-opt').forEach(o => {
   o.addEventListener('click', () => setWheelDiscount(parseInt(o.dataset.amt, 10)));
@@ -694,6 +695,7 @@ function toggleGuide(name) {
   selectedGuides[name] = !selectedGuides[name];
   renderGuideList();
   render();
+  sendParamsToBotHelp();
 }
 
 function calcGuidesDiscount() {
@@ -736,6 +738,29 @@ function selectPkgFromCard(i) {
   if (hasGuides) renderGuideList();
   calcGuidesDiscount();
   render();
+  // Сразу передаём выбранный пакет в BotHelp
+  sendParamsToBotHelp();
+}
+
+function sendParamsToBotHelp() {
+  var w = packages[pkg].windows[windowIndex];
+  var wheelDisc = getWheelDiscount();
+  var wheelDiscEur = Math.round(wheelDisc / EUR_RATE);
+  var link = buildBotHelpLink({
+    package: packages[pkg].name,
+    win: windowIndex + 1,
+    currency: cur === 'eur' ? '€' : '₽',
+    price: cur === 'eur' ? w.eur : w.rub,
+    disc: cur === 'eur' ? wheelDiscEur : wheelDisc,
+    final_price: cur === 'eur'
+      ? Math.max(0, w.eur - wheelDiscEur - guidesEur)
+      : Math.max(0, w.rub - wheelDisc - guidesRub)
+  });
+  if (link) {
+    // Тихая загрузка в фоне через img (обходит CORS)
+    var img = new Image();
+    img.src = link;
+  }
 }
 
 function sendToBot() {
