@@ -726,6 +726,11 @@ function sendParamsToBotHelp() {
   var finalRub = Math.max(0, w.rub - wheelDisc - guidesRub);
   var finalEur = Math.max(0, w.eur - wheelDiscEur - guidesEur);
 
+  // Собираем список гайдов которые уже есть у человека
+  var ownedList = Object.keys(selectedGuides).filter(function(k) {
+    return selectedGuides[k];
+  }).join(', ');
+
   // Находим нужную ссылку на оплату
   var linkKey = cur === 'eur'
     ? pkg + '_' + wheelDiscEur + '_' + guidesEur
@@ -741,7 +746,8 @@ function sendParamsToBotHelp() {
     price: cur === 'eur' ? w.eur : w.rub,
     disc: cur === 'eur' ? wheelDiscEur : wheelDisc,
     final_price: cur === 'eur' ? finalEur : finalRub,
-    pay_url: payUrl
+    pay_url: payUrl,
+    owned_guides: ownedList
   });
 
   if (botLink) {
