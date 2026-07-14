@@ -137,7 +137,16 @@
   .guide-check input[type=checkbox]{width:16px;height:16px;flex-shrink:0;accent-color:var(--teal);cursor:pointer;}
   .gcheck-name{font-size:13px;color:var(--text-2);flex:1;line-height:1.3;}
   .guide-check.on .gcheck-name{color:var(--teal);}
-  .guides-result{margin-top:12px;font-size:13px;font-weight:700;color:var(--teal);text-align:center;min-height:18px;}
+  .email-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:16px;}
+  .email-title{font-family:'Montserrat',sans-serif;font-size:15px;font-weight:800;text-transform:uppercase;color:var(--text);margin-bottom:4px;}
+  .email-sub{font-size:12px;color:var(--text-3);margin-bottom:12px;line-height:1.4;}
+  .email-input{width:100%;background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:13px 14px;font-size:15px;color:var(--text);font-family:'Mulish',sans-serif;outline:none;transition:border-color .15s;}
+  .email-input:focus{border-color:var(--teal-border);}
+  .email-input.valid{border-color:var(--teal);}
+  .email-input.invalid{border-color:var(--red);}
+  .email-hint{font-size:12px;margin-top:8px;min-height:16px;}
+  .email-hint.ok{color:var(--teal);}
+  .email-hint.err{color:var(--red);}
 
   /* ===== СТРАНИЦА ВЫДАЧИ ПОСЛЕ ОПЛАТЫ ===== */
   .success-page{position:fixed;inset:0;background:var(--bg);z-index:999;overflow-y:auto;padding:32px 16px 40px;display:none;}
@@ -282,6 +291,14 @@
 </div>
 </div>
 
+<div class="content" style="padding-top:0;padding-bottom:0">
+<div class="email-card">
+  <div class="email-title">📧 Твой email</div>
+  <div class="email-sub">Нужен для чека — введи тот же email что укажешь при оплате в Robokassa или Stripe.</div>
+  <input class="email-input" id="email-input" type="email" placeholder="example@mail.ru" oninput="onEmailInput()">
+  <div class="email-hint" id="email-hint"></div>
+</div>
+</div>
 
   <button class="send-btn" onclick="sendToBot()">
     <div class="btn-left"><div class="btn-pkg" id="btn-pkg-label">Пакет 1 · Без иллюзий</div><div class="btn-price" id="btn-price-label">—</div></div>
@@ -612,6 +629,7 @@ function buyPackage(pkgIdx) {
     price: cur === 'eur' ? w.eur : w.rub,
     disc: cur === 'eur' ? wheelDiscEur : wheelDisc,
     final_price: cur === 'eur' ? finalEurVal : finalRubVal,
+    email: userEmail,
     user_id: user.id || '',
     username: user.username || ''
   });
@@ -621,6 +639,29 @@ function buyPackage(pkgIdx) {
 
 var cur = 'rub', pkg = 2;
 var guidesRub = 0, guidesEur = 0;
+var userEmail = '';
+
+function onEmailInput() {
+  var input = document.getElementById('email-input');
+  var hint = document.getElementById('email-hint');
+  var val = input.value.trim();
+  var valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+  input.classList.toggle('valid', valid);
+  input.classList.toggle('invalid', val.length > 0 && !valid);
+  if (valid) {
+    userEmail = val;
+    hint.textContent = '✓ Отлично!';
+    hint.className = 'email-hint ok';
+  } else if (val.length > 0) {
+    userEmail = '';
+    hint.textContent = 'Введи правильный email';
+    hint.className = 'email-hint err';
+  } else {
+    userEmail = '';
+    hint.textContent = '';
+    hint.className = 'email-hint';
+  }
+}
 
 // Список гайдов по пакетам
 var GUIDES_BY_PKG = [
@@ -747,7 +788,8 @@ function sendParamsToBotHelp() {
     disc: cur === 'eur' ? wheelDiscEur : wheelDisc,
     final_price: cur === 'eur' ? finalEur : finalRub,
     pay_url: payUrl,
-    owned_guides: ownedList
+    owned_guides: ownedList,
+    email: userEmail
   });
 
   if (botLink) {
