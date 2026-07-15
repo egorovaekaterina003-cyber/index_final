@@ -767,7 +767,20 @@ function renderGuideList() {
   calcGuidesDiscount();
 }
 
+var GUIDES_MAX = [2, 4, 4]; // максимум гайдов для пакета 1, 2, 3
+
 function toggleGuide(name) {
+  var maxGuides = GUIDES_MAX[pkg] || 2;
+  var currentCount = Object.keys(selectedGuides).filter(function(k) { return selectedGuides[k]; }).length;
+
+  // Если пытаемся включить и уже достигнут лимит
+  if (!selectedGuides[name] && currentCount >= maxGuides) {
+    var res = document.getElementById('guides-result');
+    res.textContent = '⚠️ Для этого пакета можно выбрать максимум ' + maxGuides + ' гайда';
+    res.style.color = 'var(--red)';
+    return;
+  }
+
   selectedGuides[name] = !selectedGuides[name];
   renderGuideList();
   render();
