@@ -842,6 +842,11 @@ function goToPayment() {
     : (PAYMENT_LINKS_RUB[linkKey] || '');
 
   if (payUrl) {
+    // Для Robokassa добавляем email как кастомный параметр shp_email
+    // Robokassa вернёт его обратно в Result URL как Shp_email
+    if (payUrl.indexOf('robokassa') !== -1 && userEmail) {
+      payUrl += (payUrl.indexOf('?') !== -1 ? '&' : '?') + 'shp_email=' + encodeURIComponent(userEmail);
+    }
     window.location.href = payUrl;
   } else {
     alert('Ссылка на оплату не найдена. Попробуй ещё раз или напиши нам.');
