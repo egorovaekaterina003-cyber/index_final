@@ -765,8 +765,7 @@ function calcNewGuides() {
   return newGuides.map(function(g, i) {
     var link = GUIDE_LINKS[g] || '';
     return (i + 1) + '. ' + g + ' — ' + link;
-  }).join('
-');
+  }).join('\n');
 }
 
 // Тиры скидок по количеству гайдов
