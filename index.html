@@ -743,14 +743,31 @@ var ALL_GUIDES_BY_PKG = [
   ['Читай мужчин как рентген', 'Секретная книга для девочек (как не залипать на мудаков)', 'Принцессы не какают', 'Как начать притягивать нормальных', 'Строим здоровые отношения', 'Гайд про месть', 'Стоп одиночество', 'Мастерство защиты от тёмных искусств']
 ];
 
-// Вычисляем новые гайды (те которых ещё нет у клиента)
+// Ссылки на гайды
+var GUIDE_LINKS = {
+  'Читай мужчин как рентген': 'https://bit.ly/40X2UKW',
+  'Секретная книга для девочек (как не залипать на мудаков)': 'https://bit.ly/4bUkAf8',
+  'Принцессы не какают': 'https://bit.ly/47wjEMK',
+  'Как начать pritягивать нормальных': 'https://bit.ly/4s7gzKt',
+  'Как начать притягивать нормальных': 'https://bit.ly/4s7gzKt',
+  'Строим здоровые отношения': 'https://bit.ly/4v5oJpx',
+  'Гайд про месть': 'https://drive.google.com/file/d/1S5bKZk9N36dThwFJr36Zi4fxLVTUKDGG/view',
+  'Стоп одиночество': 'https://drive.google.com/file/d/1hEKnABBbSJyZRHa_NXKEpAOEk1ExS3eP/view',
+  'Мастерство защиты от тёмных искусств': 'https://goo.su/xcn56'
+};
+
+// Вычисляем новые гайды (те которых ещё нет у клиента) со ссылками
 function calcNewGuides() {
   var allGuides = ALL_GUIDES_BY_PKG[pkg] || [];
   var owned = Object.keys(selectedGuides).filter(function(k) { return selectedGuides[k]; });
   var newGuides = allGuides.filter(function(g) {
     return owned.indexOf(g) === -1;
   });
-  return newGuides.join(', ');
+  return newGuides.map(function(g, i) {
+    var link = GUIDE_LINKS[g] || '';
+    return (i + 1) + '. ' + g + ' — ' + link;
+  }).join('
+');
 }
 
 // Тиры скидок по количеству гайдов
