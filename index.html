@@ -37,7 +37,7 @@
   .wheel-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
   .wheel-title{font-family:'Montserrat',sans-serif;font-size:15px;font-weight:800;text-transform:uppercase;color:var(--gold);}
   .wheel-sub{font-size:12px;color:var(--text-3);margin-bottom:14px;line-height:1.4;}
-  .wheel-opts{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;}
+  .wheel-opts{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;}
   .wheel-opt{background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 8px;text-align:center;cursor:pointer;transition:all .15s;font-family:'Montserrat',sans-serif;font-weight:800;font-size:16px;color:var(--text-2);}
   .wheel-opt.active{border-color:var(--gold-border);background:var(--gold-bg);color:var(--gold);}
   .wheel-opt:active{transform:scale(0.97);}
@@ -271,6 +271,7 @@
   <div class="wheel-title" style="margin-bottom:4px">🎡 Твоя скидка из колеса фортуны</div>
   <div class="wheel-sub">Выбери номинал, который тебе выпал — он спишется при оформлении любого пакета.</div>
   <div class="wheel-opts" id="wheel-opts">
+    <div class="wheel-opt" data-amt="0" data-eur="0">Скидки<br>нет</div>
     <div class="wheel-opt" data-amt="0" data-eur="0">🎁 Встреча<br>с Дашей</div>
     <div class="wheel-opt" data-amt="250" data-eur="3"></div>
     <div class="wheel-opt" data-amt="500" data-eur="5"></div>
