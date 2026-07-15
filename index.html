@@ -626,6 +626,8 @@ function buyPackage(pkgIdx) {
   const finalEurVal = Math.max(0, w.eur - wheelDiscEur - guidesEur);
   const user = getTgUser();
 
+  var guidesCountClick = Object.keys(selectedGuides).filter(function(k) { return selectedGuides[k]; }).length;
+  var ownedListClick = Object.keys(selectedGuides).filter(function(k) { return selectedGuides[k]; }).join(', ');
   sendToGoogleSheet({
     event: 'buy_click',
     package: packages[pkgIdx].name,
@@ -635,8 +637,8 @@ function buyPackage(pkgIdx) {
     disc: cur === 'eur' ? wheelDiscEur : wheelDisc,
     final_price: cur === 'eur' ? finalEurVal : finalRubVal,
     email: userEmail,
-    user_id: user.id || '',
-    username: user.username || ''
+    guides_count: guidesCountClick,
+    owned_guides: ownedListClick
   });
 
   sendParamsToBotHelp();
@@ -696,6 +698,8 @@ function saveEmail() {
   var wheelDiscEur = Math.round(wheelDisc / EUR_RATE);
   var finalRubVal = Math.max(0, w.rub - wheelDisc - guidesRub);
   var finalEurVal = Math.max(0, w.eur - wheelDiscEur - guidesEur);
+  var guidesCountSave = Object.keys(selectedGuides).filter(function(k) { return selectedGuides[k]; }).length;
+  var ownedListSave = Object.keys(selectedGuides).filter(function(k) { return selectedGuides[k]; }).join(', ');
   sendToGoogleSheet({
     event: 'email_saved',
     package: packages[pkg].name,
@@ -705,8 +709,8 @@ function saveEmail() {
     disc: cur === 'eur' ? wheelDiscEur : wheelDisc,
     final_price: cur === 'eur' ? finalEurVal : finalRubVal,
     email: userEmail,
-    user_id: user.id || '',
-    username: user.username || ''
+    guides_count: guidesCountSave,
+    owned_guides: ownedListSave
   });
   // Показываем подтверждение
   var hint = document.getElementById('email-hint');
