@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Оплата прошла успешно</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Mulish:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Mulish', sans-serif;
+      background: #0A0909;
+      color: #F5F0F0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+    }
+    .card {
+      max-width: 480px;
+      width: 100%;
+      background: #181515;
+      border-radius: 16px;
+      padding: 40px 32px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+    .icon { font-size: 64px; margin-bottom: 20px; }
+    .title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 24px;
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+    .subtitle {
+      font-size: 15px;
+      color: #A89898;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+    .highlight {
+      color: #E8192C;
+      font-weight: 700;
+    }
+    .box {
+      background: rgba(232,25,44,0.08);
+      border: 1px solid rgba(232,25,44,0.2);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    .box-text {
+      font-size: 14px;
+      color: #F5F0F0;
+      line-height: 1.6;
+    }
+    .contact {
+      font-size: 13px;
+      color: #A89898;
+      margin-top: 20px;
+    }
+    .contact a {
+      color: #E8192C;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">🎉</div>
+    <div class="title">Оплата прошла успешно!</div>
+    <div class="subtitle">
+      Спасибо за покупку! Твои гайды уже летят к тебе.
+    </div>
+    <div class="box">
+      <div class="box-text">
+        📩 Письмо с гайдами придёт на твою почту <span class="highlight">в течение нескольких минут</span>.<br><br>
+        Проверь папку «Спам» — иногда письма попадают туда.
+      </div>
+    </div>
+    <div class="contact">
+      Не получила письмо? Напиши нам:<br>
+      <a href="mailto:dashashamashu@gmail.com">dashashamashu@gmail.com</a>
+    </div>
+  </div>
+</body>
+</html>
