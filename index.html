@@ -641,7 +641,6 @@ function buyPackage(pkgIdx) {
     owned_guides: ownedListClick
   });
 
-  sendParamsToBotHelp();
 }
 
 var cur = 'rub', pkg = 2;
@@ -816,17 +815,10 @@ function selectPkgFromCard(i) {
   render();
 }
 
-function sendParamsToBotHelp() {
+function goToPayment() {
   var w = packages[pkg].windows[windowIndex];
   var wheelDisc = getWheelDiscount();
   var wheelDiscEur = Math.round(wheelDisc / EUR_RATE);
-  var finalRub = Math.max(0, w.rub - wheelDisc - guidesRub);
-  var finalEur = Math.max(0, w.eur - wheelDiscEur - guidesEur);
-
-  // Собираем список гайдов которые уже есть у человека
-  var ownedList = Object.keys(selectedGuides).filter(function(k) {
-    return selectedGuides[k];
-  }).join(', ');
 
   // Находим нужную ссылку на оплату
   var linkKey = cur === 'eur'
@@ -836,22 +828,10 @@ function sendParamsToBotHelp() {
     ? (PAYMENT_LINKS_EUR[linkKey] || '')
     : (PAYMENT_LINKS_RUB[linkKey] || '');
 
-  var botLink = buildBotHelpLink({
-    package: packages[pkg].name,
-    win: windowIndex + 1,
-    currency: cur === 'eur' ? '€' : '₽',
-    price: cur === 'eur' ? w.eur : w.rub,
-    disc: cur === 'eur' ? wheelDiscEur : wheelDisc,
-    final_price: cur === 'eur' ? finalEur : finalRub,
-    pay_url: payUrl,
-    owned_guides: ownedList,
-    guides_count: Object.keys(selectedGuides).filter(function(k) { return selectedGuides[k]; }).length,
-    guides_disc: cur === 'eur' ? guidesEur : guidesRub,
-    email: userEmail
-  });
-
-  if (botLink) {
-    window.location.href = botLink;
+  if (payUrl) {
+    window.location.href = payUrl;
+  } else {
+    alert('Ссылка на оплату не найдена. Попробуй ещё раз или напиши нам.');
   }
 }
 
@@ -864,7 +844,7 @@ function sendToBot() {
     hint.className = 'email-hint err';
     return;
   }
-  buyPackage(pkg);
+  goToPayment();
 }
 
 function render() {
