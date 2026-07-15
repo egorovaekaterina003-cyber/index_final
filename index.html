@@ -271,7 +271,7 @@
   <div class="wheel-title" style="margin-bottom:4px">🎡 Твоя скидка из колеса фортуны</div>
   <div class="wheel-sub">Выбери номинал, который тебе выпал — он спишется при оформлении любого пакета.</div>
   <div class="wheel-opts" id="wheel-opts">
-    <div class="wheel-opt" data-amt="0" data-eur="0">Скидки<br>нет</div>
+    <div class="wheel-opt" data-amt="0" data-eur="0" data-nodiscount="1">Скидки<br>нет</div>
     <div class="wheel-opt" data-amt="0" data-eur="0">🎁 Встреча<br>с Дашей</div>
     <div class="wheel-opt" data-amt="250" data-eur="3"></div>
     <div class="wheel-opt" data-amt="500" data-eur="5"></div>
@@ -911,7 +911,7 @@ function render() {
   document.querySelectorAll('.wheel-opt').forEach(o => {
     const amtRub = parseInt(o.dataset.amt, 10);
     const amtEur = parseInt(o.dataset.eur, 10);
-    if (amtRub === 0) {
+    if (amtRub === 0 && !o.dataset.nodiscount) {
       o.innerHTML = '🎁 Встреча<br>с Дашей';
     } else {
       o.textContent = cur === 'eur' ? ('−' + amtEur + ' €') : ('−' + amtRub + ' ₽');
