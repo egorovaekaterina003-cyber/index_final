@@ -699,6 +699,7 @@ function saveEmail() {
   var finalEurVal = Math.max(0, w.eur - wheelDiscEur - guidesEur);
   var guidesCountSave = Object.keys(selectedGuides).filter(function(k) { return selectedGuides[k]; }).length;
   var ownedListSave = Object.keys(selectedGuides).filter(function(k) { return selectedGuides[k]; }).join(', ');
+  var newGuidesSave = calcNewGuides();
   sendToGoogleSheet({
     event: 'email_saved',
     package: packages[pkg].name,
@@ -709,7 +710,8 @@ function saveEmail() {
     final_price: cur === 'eur' ? finalEurVal : finalRubVal,
     email: userEmail,
     guides_count: guidesCountSave,
-    owned_guides: ownedListSave
+    owned_guides: ownedListSave,
+    new_guides: newGuidesSave
   });
   // Показываем подтверждение
   var hint = document.getElementById('email-hint');
@@ -721,15 +723,35 @@ function saveEmail() {
   document.getElementById('send-btn').classList.remove('disabled');
 }
 
-// Список гайдов по пакетам
+// Список гайдов по пакетам (те что человек мог купить ранее — для скидки)
 var GUIDES_BY_PKG = [
-  // Пакет 1 — гайды которые человек мог купить ранее
+  // Пакет 1
   ['Читай мужчин как рентген', 'Секретная книга для девочек (как не залипать на мудаков)', 'Как начать притягивать нормальных'],
   // Пакет 2
   ['Читай мужчин как рентген', 'Секретная книга для девочек (как не залипать на мудаков)', 'Принцессы не какают', 'Как начать притягивать нормальных', 'Строим здоровые отношения'],
   // Пакет 3
   ['Читай мужчин как рентген', 'Секретная книга для девочек (как не залипать на мудаков)', 'Принцессы не какают', 'Как начать притягивать нормальных', 'Строим здоровые отношения', 'Мастерство защиты от тёмных искусств']
 ];
+
+// Полный список гайдов в каждом пакете (включая эксклюзивные)
+var ALL_GUIDES_BY_PKG = [
+  // Пакет 1 — Без иллюзий
+  ['Читай мужчин как рентген', 'Секретная книга для девочек (как не залипать на мудаков)', 'Как начать притягивать нормальных', 'Гайд про месть'],
+  // Пакет 2 — Вооружена и очень опасна
+  ['Читай мужчин как рентген', 'Секретная книга для девочек (как не залипать на мудаков)', 'Принцессы не какают', 'Как начать притягивать нормальных', 'Строим здоровые отношения', 'Гайд про месть', 'Стоп одиночество'],
+  // Пакет 3 — Полный арсенал
+  ['Читай мужчин как рентген', 'Секретная книга для девочек (как не залипать на мудаков)', 'Принцессы не какают', 'Как начать притягивать нормальных', 'Строим здоровые отношения', 'Гайд про месть', 'Стоп одиночество', 'Мастерство защиты от тёмных искусств']
+];
+
+// Вычисляем новые гайды (те которых ещё нет у клиента)
+function calcNewGuides() {
+  var allGuides = ALL_GUIDES_BY_PKG[pkg] || [];
+  var owned = Object.keys(selectedGuides).filter(function(k) { return selectedGuides[k]; });
+  var newGuides = allGuides.filter(function(g) {
+    return owned.indexOf(g) === -1;
+  });
+  return newGuides.join(', ');
+}
 
 // Тиры скидок по количеству гайдов
 var GUIDE_TIERS_RUB = [0, 700, 1500, 2500];
