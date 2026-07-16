@@ -371,7 +371,7 @@ const PAYMENT_LINKS_RUB = {
   "2_250_0":"https://auth.robokassa.ru/merchant/Invoice/DrsDUjWgvkCLK8Ndh_N7pg",
   "2_500_0":"https://auth.robokassa.ru/merchant/Invoice/wMao7WJ6pEajcGWsmCELSg",
   "2_1000_0":"https://auth.robokassa.ru/merchant/Invoice/XuaZo3GDKUCbPyfmUTrCRw",
-  "2_0_700":"https://auth.robokassa.ru/merchant/Invoice/M6QW-uqx4U-iIemkELcZug",
+  "2_0_700":"https://auth.robokassa.ru/merchant/Invoice/nRQW0N3F40igCeRMxa83og",
   "2_250_700":"https://auth.robokassa.ru/merchant/Invoice/h8bIwZt3zUGMPIeNU_4rZw",
   "2_500_700":"https://auth.robokassa.ru/merchant/Invoice/SbJ-ZB5EIk25-qIylZ97yg",
   "2_1000_700":"https://auth.robokassa.ru/merchant/Invoice/uxY7MEB-DEynLn18N6V-DQ",
@@ -569,24 +569,34 @@ function getWheelDiscount() {
   const v = localStorage.getItem('wheelDiscount');
   return v ? parseInt(v, 10) : 0;
 }
-function setWheelDiscount(amt) {
+var selectedWheelEl = null;
+
+function setWheelDiscount(el) {
+  var amt = parseInt(el.dataset.amt, 10);
   localStorage.setItem('wheelDiscount', amt);
+  localStorage.setItem('wheelDiscountEl', el.dataset.idx);
+  selectedWheelEl = el;
   document.querySelectorAll('.wheel-opt').forEach(function(o) {
-    o.classList.toggle('active', parseInt(o.dataset.amt, 10) === amt);
+    o.classList.remove('active');
   });
+  el.classList.add('active');
   document.getElementById('wheel-saved').classList.add('show');
   render();
 }
-document.querySelectorAll('.wheel-opt').forEach(o => {
-  o.addEventListener('click', () => setWheelDiscount(parseInt(o.dataset.amt, 10)));
+document.querySelectorAll('.wheel-opt').forEach(function(o, i) {
+  o.dataset.idx = i;
+  o.addEventListener('click', function() { setWheelDiscount(o); });
 });
 (function initWheel(){
-  const saved = getWheelDiscount();
-  if (saved) {
-    document.querySelectorAll('.wheel-opt').forEach(o => {
-      o.classList.toggle('active', parseInt(o.dataset.amt, 10) === saved);
-    });
-    document.getElementById('wheel-saved').classList.add('show');
+  const savedIdx = localStorage.getItem('wheelDiscountEl');
+  if (savedIdx !== null) {
+    const opts = document.querySelectorAll('.wheel-opt');
+    const el = opts[parseInt(savedIdx, 10)];
+    if (el) {
+      el.classList.add('active');
+      selectedWheelEl = el;
+      document.getElementById('wheel-saved').classList.add('show');
+    }
   }
 })();
 
