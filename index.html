@@ -369,8 +369,8 @@ const PAYMENT_LINKS_RUB = {
   "1_2500_2500":"https://auth.robokassa.ru/merchant/Invoice/4Ql6tq74Y0SGH2enDdg_iA",
   "2_0_0":"https://auth.robokassa.ru/merchant/Invoice/M6QW-uqx4U-iIemkELcZug",
   "2_250_0":"https://auth.robokassa.ru/merchant/Invoice/Z4iglyjuG06kZnmHfvXKyA",
-  "2_500_0":"https://auth.robokassa.ru/merchant/Invoice/wMao7WJ6pEajcGWsmCELSg",
-  "2_1000_0":"https://auth.robokassa.ru/merchant/Invoice/XuaZo3GDKUCbPyfmUTrCRw",
+  "2_500_0":"https://auth.robokassa.ru/merchant/Invoice/If7lEF2TuESdZUPN1x5SOw",
+  "2_1000_0":"https://auth.robokassa.ru/merchant/Invoice/IGAuz6qlREOQWIVh0LJA8Q",
   "2_0_700":"https://auth.robokassa.ru/merchant/Invoice/M6QW-uqx4U-iIemkELcZug",
   "2_250_700":"https://auth.robokassa.ru/merchant/Invoice/h8bIwZt3zUGMPIeNU_4rZw",
   "2_500_700":"https://auth.robokassa.ru/merchant/Invoice/SbJ-ZB5EIk25-qIylZ97yg",
@@ -512,7 +512,7 @@ const packages = [
 
 
 
-const WINDOW_LENGTH_DAYS = 5; // длина одного "окна" цены в днях
+const WINDOW_LENGTH_DAYS = 10; // длина одного "окна" цены в днях
 const EUR_RATE = 91; // курс для конвертации скидки колеса фортуны в евро
 
 /* ============================================================
@@ -526,7 +526,7 @@ if (tg) { tg.expand(); tg.ready(); }
    Отсчёт идёт от единой даты старта для ВСЕХ — не от первого
    визита конкретного человека. Поменяй дату ниже под запуск.
    ============================================================ */
-const CAMPAIGN_START = new Date('2026-07-16T00:00:00').getTime();
+const CAMPAIGN_START = new Date('2026-07-20T00:00:00').getTime();
 const firstVisitTs = CAMPAIGN_START;
 
 function getWindowIndex() {
