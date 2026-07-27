@@ -38,6 +38,7 @@
   .wheel-title{font-family:'Montserrat',sans-serif;font-size:15px;font-weight:800;text-transform:uppercase;color:var(--gold);}
   .wheel-sub{font-size:12px;color:var(--text-3);margin-bottom:14px;line-height:1.4;}
   .wheel-opts{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;}
+  @media(max-width:480px){.wheel-opts{display:flex;overflow-x:auto;gap:6px;padding-bottom:4px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}.wheel-opts::-webkit-scrollbar{display:none;}.wheel-opt{flex:0 0 72px;min-width:72px;}}
   .wheel-opt{background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 8px;text-align:center;cursor:pointer;transition:all .15s;font-family:'Montserrat',sans-serif;font-weight:800;font-size:16px;color:var(--text-2);}
   .wheel-opt.active{border-color:var(--gold-border);background:var(--gold-bg);color:var(--gold);}
   .wheel-opt:active{transform:scale(0.97);}
@@ -526,7 +527,7 @@ if (tg) { tg.expand(); tg.ready(); }
    Отсчёт идёт от единой даты старта для ВСЕХ — не от первого
    визита конкретного человека. Поменяй дату ниже под запуск.
    ============================================================ */
-const CAMPAIGN_START = new Date('2026-07-27T00:00:00').getTime();
+const CAMPAIGN_START = new Date('2026-07-27T00:00:00').getTime(); // kept for reference
 const firstVisitTs = CAMPAIGN_START;
 
 function getWindowIndex() {
@@ -537,11 +538,7 @@ function getWindowIndex() {
   return 2;
 }
 function getWindowDeadline() {
-  const daysSince = Math.floor((Date.now() - firstVisitTs) / 86400000);
-  const idx = getWindowIndex();
-  const windowsPassedDays = idx === 2 ? null : (idx + 1) * WINDOW_LENGTH_DAYS;
-  if (windowsPassedDays === null) return null;
-  return firstVisitTs + windowsPassedDays * 86400000;
+  return new Date('2026-08-01T23:59:00').getTime();
 }
 let windowIndex = getWindowIndex();
 
