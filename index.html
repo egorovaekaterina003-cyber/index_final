@@ -37,8 +37,10 @@
   .wheel-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
   .wheel-title{font-family:'Montserrat',sans-serif;font-size:15px;font-weight:800;text-transform:uppercase;color:var(--gold);}
   .wheel-sub{font-size:12px;color:var(--text-3);margin-bottom:14px;line-height:1.4;}
-  .wheel-opts{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;}
-  @media(max-width:480px){.wheel-opts{display:flex;overflow-x:auto;gap:6px;padding-bottom:4px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}.wheel-opts::-webkit-scrollbar{display:none;}.wheel-opt{flex:0 0 72px;min-width:72px;}}
+  .wheel-opts{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;}
+  .wheel-opts-meeting{margin-top:6px;}
+  .wheel-opt-meeting{width:100%;box-sizing:border-box;font-size:15px;}
+  @media(max-width:480px){.wheel-opts{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;}.wheel-opt{padding:10px 4px;font-size:13px;}}
   .wheel-opt{background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 8px;text-align:center;cursor:pointer;transition:all .15s;font-family:'Montserrat',sans-serif;font-weight:800;font-size:16px;color:var(--text-2);}
   .wheel-opt.active{border-color:var(--gold-border);background:var(--gold-bg);color:var(--gold);}
   .wheel-opt:active{transform:scale(0.97);}
@@ -273,11 +275,13 @@
   <div class="wheel-sub">Выбери номинал, который тебе выпал — он спишется при оформлении любого пакета.</div>
   <div class="wheel-opts" id="wheel-opts">
     <div class="wheel-opt" data-amt="0" data-eur="0" data-nodiscount="1">Скидки<br>нет</div>
-    <div class="wheel-opt" data-amt="0" data-eur="0">🎁 Встреча<br>с Дашей</div>
     <div class="wheel-opt" data-amt="250" data-eur="3"></div>
     <div class="wheel-opt" data-amt="500" data-eur="5"></div>
     <div class="wheel-opt" data-amt="1000" data-eur="11"></div>
     <div class="wheel-opt" data-amt="2500" data-eur="27"></div>
+  </div>
+  <div class="wheel-opts-meeting">
+    <div class="wheel-opt wheel-opt-meeting" data-amt="0" data-eur="0">🎁 Встреча с Дашей</div>
   </div>
   <div class="wheel-saved" id="wheel-saved">Скидка сохранена ✓</div>
 </div>
