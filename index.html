@@ -359,14 +359,14 @@ const PAYMENT_LINKS_RUB = {
   "1_250_1500":"https://auth.robokassa.ru/merchant/Invoice/nNEhszoEl0O9sfIPZ7MbiQ",
   "1_500_1500":"https://auth.robokassa.ru/merchant/Invoice/2E3NW0FbUk-z447QWYRWQg",
   "1_1000_1500":"https://auth.robokassa.ru/merchant/Invoice/x5RqtQ8hAkOjjI6Qp4oQEA",
-  "1_0_2500":"https://auth.robokassa.ru/merchant/Invoice/8TTLy2dj5kudH30O2nnsrw",
-  "1_250_2500":"https://auth.robokassa.ru/merchant/Invoice/VPGS2vuaGU2VSu_WsE4CXQ",
-  "1_500_2500":"https://auth.robokassa.ru/merchant/Invoice/buMUAcKi3UaKi8tIWarH5A",
-  "1_1000_2500":"https://auth.robokassa.ru/merchant/Invoice/9u_fSImdNUyjr8QxDaC6Gg",
+  "1_0_2200":"https://auth.robokassa.ru/merchant/Invoice/8TTLy2dj5kudH30O2nnsrw",
+  "1_250_2200":"https://auth.robokassa.ru/merchant/Invoice/VPGS2vuaGU2VSu_WsE4CXQ",
+  "1_500_2200":"https://auth.robokassa.ru/merchant/Invoice/buMUAcKi3UaKi8tIWarH5A",
+  "1_1000_2200":"https://auth.robokassa.ru/merchant/Invoice/9u_fSImdNUyjr8QxDaC6Gg",
   "1_2500_0":"https://auth.robokassa.ru/merchant/Invoice/TNS14olpCE-7-_FkZMLJng",
   "1_2500_700":"https://auth.robokassa.ru/merchant/Invoice/1TNSRP7YZEWJXQ4u1TKzzQ",
   "1_2500_1500":"https://auth.robokassa.ru/merchant/Invoice/2t9TFW9-qkuOWPl5S3C8ZA",
-  "1_2500_2500":"https://auth.robokassa.ru/merchant/Invoice/Tt0acvV5f02yr6yVzGHpQg",
+  "1_2500_2200":"https://auth.robokassa.ru/merchant/Invoice/Tt0acvV5f02yr6yVzGHpQg",
   "2_0_0":"https://auth.robokassa.ru/merchant/Invoice/Zl6dDW3Rik-2_1kLoBhb2g",
   "2_250_0":"https://auth.robokassa.ru/merchant/Invoice/uO40_LKng02J_aVQq6FX9Q",
   "2_500_0":"https://auth.robokassa.ru/merchant/Invoice/M7BH8PX5uEyy8Yeim89UTQ",
@@ -512,7 +512,7 @@ const packages = [
 
 
 
-const WINDOW_LENGTH_DAYS = 10; // длина одного "окна" цены в днях
+const WINDOW_LENGTH_DAYS = 5; // длина одного "окна" цены в днях
 const EUR_RATE = 91; // курс для конвертации скидки колеса фортуны в евро
 
 /* ============================================================
@@ -526,7 +526,7 @@ if (tg) { tg.expand(); tg.ready(); }
    Отсчёт идёт от единой даты старта для ВСЕХ — не от первого
    визита конкретного человека. Поменяй дату ниже под запуск.
    ============================================================ */
-const CAMPAIGN_START = new Date('2026-07-20T00:00:00').getTime();
+const CAMPAIGN_START = new Date('2026-07-27T00:00:00').getTime();
 const firstVisitTs = CAMPAIGN_START;
 
 function getWindowIndex() {
