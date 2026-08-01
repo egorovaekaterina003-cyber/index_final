@@ -223,7 +223,7 @@
 <div class="content">
 
 <div class="timer-banner">
-  <div class="timer-label">Текущая цена действует</div>
+  <div class="timer-label">Текущая цена действует<br><span style="font-weight:400;opacity:0.75;font-size:11px;">до 04 августа 00:00</span></div>
   <div class="timer-value" id="window-countdown">—</div>
 </div>
 
@@ -549,7 +549,7 @@ if (tg) { tg.expand(); tg.ready(); }
    Отсчёт идёт от единой даты старта для ВСЕХ — не от первого
    визита конкретного человека. Поменяй дату ниже под запуск.
    ============================================================ */
-const CAMPAIGN_START = new Date('2026-07-27T00:00:00').getTime(); // kept for reference
+const CAMPAIGN_START = new Date('2026-07-29T00:00:00').getTime(); // kept for reference
 const firstVisitTs = CAMPAIGN_START;
 
 function getWindowIndex() {
@@ -560,7 +560,7 @@ function getWindowIndex() {
   return 2;
 }
 function getWindowDeadline() {
-  return new Date('2026-08-01T23:59:00').getTime();
+  return new Date('2026-08-03T23:59:00').getTime();
 }
 let windowIndex = getWindowIndex();
 
