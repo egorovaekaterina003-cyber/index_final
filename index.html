@@ -468,7 +468,18 @@ const PAYMENT_LINKS_EUR = {
   "2_3_27":"https://buy.stripe.com/6oU6oH6hF78paWb2Mg8Ra2X",
   "2_5_27":"https://buy.stripe.com/14A6oHcG3fEV5BRaeI8Ra2Y",
   "2_11_27":"https://buy.stripe.com/fZu6oHeObgIZ9S71Ic8Ra2Z",
-  "2_27_27":"https://buy.stripe.com/9B6bJ1axV3Wd9S74Uo8Ra30"
+  "2_27_27":"https://buy.stripe.com/9B6bJ1axV3Wd9S74Uo8Ra30",
+  // Алиасы с _24 (3 гайда = 24€ скидка) для П2 и П3
+  "1_0_24":"https://buy.stripe.com/aFa3cv49xgIZfcr3Qk8Ra2C",
+  "1_3_24":"https://buy.stripe.com/6oU7sLaxV9gxggvdqU8Ra2D",
+  "1_5_24":"https://buy.stripe.com/28EeVd5dBboFc0ffz28Ra2E",
+  "1_11_24":"https://buy.stripe.com/bJe14n8pNdwN5BR2Mg8Ra2F",
+  "1_27_24":"https://buy.stripe.com/3cIcN5axVfEVd4jaeI8Ra2G",
+  "2_0_24":"https://buy.stripe.com/14A9ATfSfeAR3tJ3Qk8Ra2W",
+  "2_3_24":"https://buy.stripe.com/6oU6oH6hF78paWb2Mg8Ra2X",
+  "2_5_24":"https://buy.stripe.com/14A6oHcG3fEV5BRaeI8Ra2Y",
+  "2_11_24":"https://buy.stripe.com/fZu6oHeObgIZ9S71Ic8Ra2Z",
+  "2_27_24":"https://buy.stripe.com/9B6bJ1axV3Wd9S74Uo8Ra30"
 };
 
 /* ============================================================
@@ -810,7 +821,7 @@ function calcNewGuides() {
 
 // Тиры скидок по количеству гайдов
 var GUIDE_TIERS_RUB = [0, 700, 1500, 2200];
-// Скидки за гайды в евро по пакетам (П1 отличается от П2/П3)
+// Скидки за гайды в евро по пакетам
 var GUIDE_TIERS_EUR_BY_PKG = [
   [0, 7, 16],        // П1: нет/1/2 гайда
   [0, 8, 16, 24],    // П2: нет/1/2/3 гайда
