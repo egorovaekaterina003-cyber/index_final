@@ -223,7 +223,7 @@
 <div class="content">
 
 <div class="timer-banner">
-  <div class="timer-label">Текущая цена действует<br><span style="font-weight:400;opacity:0.75;font-size:11px;">до 03 августа 23:59</span></div>
+  <div class="timer-label">Текущая цена действует<br><span style="font-weight:400;opacity:0.75;font-size:11px;">до 08 августа 23:59</span></div>
   <div class="timer-value" id="window-countdown">—</div>
 </div>
 
@@ -547,7 +547,7 @@ if (tg) { tg.expand(); tg.ready(); }
    Отсчёт идёт от единой даты старта для ВСЕХ — не от первого
    визита конкретного человека. Поменяй дату ниже под запуск.
    ============================================================ */
-const CAMPAIGN_START = new Date('2026-07-30T00:00:00').getTime(); // kept for reference
+const CAMPAIGN_START = new Date('2026-08-04T00:00:00').getTime(); // kept for reference
 const firstVisitTs = CAMPAIGN_START;
 
 function getWindowIndex() {
@@ -565,7 +565,7 @@ function getWindowDeadline() {
   const daysUntilSwitch = (idx + 1) * WINDOW_LENGTH_DAYS;
   return firstVisitTs + daysUntilSwitch * 86400000;
 }
-let windowIndex = getWindowIndex();
+let windowIndex = 1; // Окно 2 — жёстко задано
 
 function renderCountdown() {
   const el = document.getElementById('window-countdown');
@@ -573,7 +573,6 @@ function renderCountdown() {
   if (!deadline) { el.textContent = 'это финальная цена'; return; }
   const ms = deadline - Date.now();
   if (ms <= 0) {
-    windowIndex = getWindowIndex();
     render();
     return;
   }
@@ -811,7 +810,13 @@ function calcNewGuides() {
 
 // Тиры скидок по количеству гайдов
 var GUIDE_TIERS_RUB = [0, 700, 1500, 2200];
-var GUIDE_TIERS_EUR = [0, 8, 16, 27];
+// Скидки за гайды в евро по пакетам (П1 отличается от П2/П3)
+var GUIDE_TIERS_EUR_BY_PKG = [
+  [0, 7, 16],        // П1: нет/1/2 гайда
+  [0, 8, 16, 24],    // П2: нет/1/2/3 гайда
+  [0, 8, 16, 24]     // П3: нет/1/2/3 гайда
+];
+var GUIDE_TIERS_EUR = GUIDE_TIERS_EUR_BY_PKG[pkg] || [0, 8, 16, 24];
 
 var selectedGuides = {}; // { 'название': true/false }
 var hasGuides = false;
@@ -872,8 +877,10 @@ function calcGuidesDiscount() {
   }
   var count = Object.keys(selectedGuides).filter(function(k) { return selectedGuides[k]; }).length;
   var tierIdx = count === 0 ? 0 : count === 1 ? 1 : count === 2 ? 2 : 3;
+  // Пересчитываем EUR тиры для текущего пакета
+  var eurTiers = GUIDE_TIERS_EUR_BY_PKG[pkg] || [0, 8, 16, 24];
   guidesRub = GUIDE_TIERS_RUB[tierIdx];
-  guidesEur = GUIDE_TIERS_EUR[tierIdx];
+  guidesEur = eurTiers[Math.min(tierIdx, eurTiers.length - 1)];
   var res = document.getElementById('guides-result');
   if (count === 0) {
     res.textContent = 'Отметь гайды чтобы получить скидку';
@@ -944,7 +951,7 @@ function sendToBot() {
 }
 
 function render() {
-  windowIndex = getWindowIndex();
+  // windowIndex зафиксирован на Окне 2
   renderCountdown();
 
   // Кнопки колеса фортуны — текст зависит от выбранной валюты
