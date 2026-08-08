@@ -576,23 +576,21 @@ function getWindowDeadline() {
   const daysUntilSwitch = (idx + 1) * WINDOW_LENGTH_DAYS;
   return firstVisitTs + daysUntilSwitch * 86400000;
 }
-let windowIndex = 1; // Окно 2 — жёстко задано
+
+
+const WINDOW3_DEADLINE = new Date('2026-08-15T23:59:00').getTime();
 
 function renderCountdown() {
   const el = document.getElementById('window-countdown');
-  const deadline = getWindowDeadline();
-  if (!deadline) { el.textContent = 'это финальная цена'; return; }
-  const ms = deadline - Date.now();
-  if (ms <= 0) {
-    render();
-    return;
-  }
+  const ms = WINDOW3_DEADLINE - Date.now();
+  if (ms <= 0) { el.textContent = 'это финальная цена'; return; }
   const d = Math.floor(ms / 86400000);
   const h = Math.floor((ms % 86400000) / 3600000);
   const m = Math.floor((ms % 3600000) / 60000);
   el.textContent = (d > 0 ? d + 'д ' : '') + h + 'ч ' + m + 'м';
 }
 setInterval(renderCountdown, 30000);
+let windowIndex = 2; // Окно 3 — жёстко задано
 
 /* ============================================================
    КОЛЕСО ФОРТУНЫ — СКИДКА
