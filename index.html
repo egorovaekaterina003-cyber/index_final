@@ -223,7 +223,7 @@
 <div class="content">
 
 <div class="timer-banner">
-  <div class="timer-label">Текущая цена действует<br><span style="font-weight:400;opacity:0.75;font-size:11px;">до 15 августа 23:59</span></div>
+  <div class="timer-label">Текущая цена действует<br><span style="font-weight:400;opacity:0.75;font-size:11px;">до 21 августа 23:59</span></div>
   <div class="timer-value" id="window-countdown">—</div>
 </div>
 
@@ -351,135 +351,124 @@ const GOOGLE_SHEET_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbzHG3D
 // Пример: "0_0_0" = Пакет1, встреча с Дашей, нет гайдов → 4900₽
 // Заполни ссылками когда создашь их в Robokassa и Stripe
 const PAYMENT_LINKS_RUB = {
-  // П1-О3 (Пакет 1, Окно 3)
-  "0_0_0":"https://auth.robokassa.ru/merchant/Invoice/hMk1QBK3z0ayfY6LDvmhGg",
-  "0_0_1500":"https://auth.robokassa.ru/merchant/Invoice/4NqsxV_X6Uy_qh2XNlrs6g",
-  "0_0_700":"https://auth.robokassa.ru/merchant/Invoice/zfx3OK3d9kGc-9jOytTAlw",
-  "0_1000_0":"https://auth.robokassa.ru/merchant/Invoice/D1MGmcM7zE-WPuQvRLvmxA",
-  "0_1000_1500":"https://auth.robokassa.ru/merchant/Invoice/BQ9J4rz5UE2ry9aBC5MCiQ",
-  "0_1000_700":"https://auth.robokassa.ru/merchant/Invoice/RtegDb6OM0mabjC8to9jZA",
-  "0_2500_0":"https://auth.robokassa.ru/merchant/Invoice/-im9-ZMuK0C9RXzhHVqOig",
-  "0_2500_1500":"https://auth.robokassa.ru/merchant/Invoice/JeuHNnUe1kqLu4IuShNPRQ",
-  "0_2500_700":"https://auth.robokassa.ru/merchant/Invoice/xczyPPbptUaJ1owJic0Qlg",
-  "0_250_0":"https://auth.robokassa.ru/merchant/Invoice/5edeReBmGE2YPWt5CyIK5A",
-  "0_250_1500":"https://auth.robokassa.ru/merchant/Invoice/M8P5joLTk0-cMNTlySr2Xw",
-  "0_250_700":"https://auth.robokassa.ru/merchant/Invoice/Zoe62Nru-0ynaw6VA0Fypg",
-  "0_500_0":"https://auth.robokassa.ru/merchant/Invoice/Zwr4-K79dUGE803gk6M1-Q",
-  "0_500_1500":"https://auth.robokassa.ru/merchant/Invoice/GMu2iiAvs0-W_7lKI5BKcg",
-  "0_500_700":"https://auth.robokassa.ru/merchant/Invoice/lcJYwDKa_0GGrBLSAbkVYg",
-  // П2-О3 (Пакет 2, Окно 3)
-  "1_0_0":"https://auth.robokassa.ru/merchant/Invoice/KG4O2T8vN02_8SoH5bXOTQ",
-  "1_0_1500":"https://auth.robokassa.ru/merchant/Invoice/-UddXtnMI0uHmxWNwZWuhA",
-  "1_0_2200":"https://auth.robokassa.ru/merchant/Invoice/E7aNp7CJz0GZ1xAkhTEspQ",
-  "1_0_700":"https://auth.robokassa.ru/merchant/Invoice/xClFP-FJnUqxLhcjfiG--A",
-  "1_1000_0":"https://auth.robokassa.ru/merchant/Invoice/msYgM3sGb0Wr6665Sj9YKA",
-  "1_1000_1500":"https://auth.robokassa.ru/merchant/Invoice/3o_-Ur4790uZP237Cde7MQ",
-  "1_1000_2200":"https://auth.robokassa.ru/merchant/Invoice/mQic4mOuHUSefBUKMfW4Iw",
-  "1_1000_700":"https://auth.robokassa.ru/merchant/Invoice/hv6biJy_8EqdFzW520hSrw",
-  "1_2500_0":"https://auth.robokassa.ru/merchant/Invoice/K8GhiIhlEkCeE1nFI9rXmA",
-  "1_2500_1500":"https://auth.robokassa.ru/merchant/Invoice/o-WI38IKaU6zBUkTlX6w5w",
-  "1_2500_2200":"https://auth.robokassa.ru/merchant/Invoice/jmo_kX6uMUWlbVOFcuzD3w",
-  "1_2500_700":"https://auth.robokassa.ru/merchant/Invoice/do0Q03P4106t8gN5diWUZQ",
-  "1_250_0":"https://auth.robokassa.ru/merchant/Invoice/duYbcrP0n0iVZmFCOgIZGw",
-  "1_250_1500":"https://auth.robokassa.ru/merchant/Invoice/eIRl0DKoFE2_9_4sa3FaFg",
-  "1_250_2200":"https://auth.robokassa.ru/merchant/Invoice/DPNj7nn2j0GT6zI-Or8nZQ",
-  "1_250_700":"https://auth.robokassa.ru/merchant/Invoice/EmZ45wToNEq_xuwBRLVNTQ",
-  "1_500_0":"https://auth.robokassa.ru/merchant/Invoice/ZGtDIyR2jkyclMd-9zIFMQ",
-  "1_500_1500":"https://auth.robokassa.ru/merchant/Invoice/wlnS9tJdgUSeAWdiOwFZLQ",
-  "1_500_2200":"https://auth.robokassa.ru/merchant/Invoice/wbBiKje3QU2xtKuxZxdgYg",
-  "1_500_700":"https://auth.robokassa.ru/merchant/Invoice/tZWsUqtakUy4AMZP9smL8A",
-  // П3-О3 (Пакет 3, Окно 3)
-  "2_0_0":"https://auth.robokassa.ru/merchant/Invoice/HRsaTI83jUuG6tUEzs2pGw",
-  "2_0_1500":"https://auth.robokassa.ru/merchant/Invoice/D_Mg__3lI0aPREA8BfdLuQ",
-  "2_0_2200":"https://auth.robokassa.ru/merchant/Invoice/NQN7NF2El0-qhb04wuXtTg",
-  "2_0_700":"https://auth.robokassa.ru/merchant/Invoice/uDRTOGbRj0atnD_HbS_-LQ",
-  "2_1000_0":"https://auth.robokassa.ru/merchant/Invoice/NUA2tAGKrUq8ikee5mY7MA",
-  "2_1000_1500":"https://auth.robokassa.ru/merchant/Invoice/tJGApE82CkWpd0NzPAMIFA",
-  "2_1000_2200":"https://auth.robokassa.ru/merchant/Invoice/Bdh409rt0EuYEVc9a18ybQ",
-  "2_1000_700":"https://auth.robokassa.ru/merchant/Invoice/ojszZjTkLUe7VyTgIb8kLA",
-  "2_2500_0":"https://auth.robokassa.ru/merchant/Invoice/V1hQILnBsk6_u02Z6-w8PA",
-  "2_2500_1500":"https://auth.robokassa.ru/merchant/Invoice/iusoEQTyakqU8OSsUMPdMg",
-  "2_2500_2200":"https://auth.robokassa.ru/merchant/Invoice/M2x1TJlZdE6zNXEGaLetJQ",
-  "2_2500_700":"https://auth.robokassa.ru/merchant/Invoice/5yQUxbMxxUGcA-l42n6W8w",
-  "2_250_0":"https://auth.robokassa.ru/merchant/Invoice/g2k-tUIIE0Wk4lyHmwS4OQ",
-  "2_250_1500":"https://auth.robokassa.ru/merchant/Invoice/B9T9t6Br1ka-G3vt_T32sg",
-  "2_250_2200":"https://auth.robokassa.ru/merchant/Invoice/al1W7x29XkmHqcl1BSakaQ",
-  "2_250_700":"https://auth.robokassa.ru/merchant/Invoice/ol1wTvRZJ0OVrP9HzGIeNg",
-  "2_500_0":"https://auth.robokassa.ru/merchant/Invoice/afDXRKwvWkWkOFwauXSyAg",
-  "2_500_1500":"https://auth.robokassa.ru/merchant/Invoice/Oc_iQE5LkUGLNcFFMde-ag",
-  "2_500_2200":"https://auth.robokassa.ru/merchant/Invoice/qPWJ4qaVCkGvRGaeS9eFyA",
-  "2_500_700":"https://auth.robokassa.ru/merchant/Invoice/6WKI4G2Jo0y_j7wbkEKigA"
+  // П1-О4 (Пакет 1, Окно 4)
+  "0_0_0":"https://auth.robokassa.ru/merchant/Invoice/gyEW3lASMUGMo6L5fqLb2Q",
+  "0_0_700":"https://auth.robokassa.ru/merchant/Invoice/Mgkrkh8J1U2zV9gZsae_iw",
+  "0_0_1500":"https://auth.robokassa.ru/merchant/Invoice/NBSNaOSdV0q1lVAtF-aw7Q",
+  "0_250_0":"https://auth.robokassa.ru/merchant/Invoice/UAeX7D6hC0ONzdfOnwJUAw",
+  "0_250_700":"https://auth.robokassa.ru/merchant/Invoice/cRj-aS_-YUas3o1LplaEqg",
+  "0_250_1500":"https://auth.robokassa.ru/merchant/Invoice/PumY3sZCGUWNSXcJ9zxErA",
+  "0_500_0":"https://auth.robokassa.ru/merchant/Invoice/yy4evjAHE0ugZodL35i9qQ",
+  "0_500_700":"https://auth.robokassa.ru/merchant/Invoice/nzmnqDwVsky_lBKBPUjXZQ",
+  "0_500_1500":"https://auth.robokassa.ru/merchant/Invoice/79agQdOKmkmbanE43fUK6g",
+  "0_1000_0":"https://auth.robokassa.ru/merchant/Invoice/eOQDWpEoUEO8ibYW8u2Pgw",
+  "0_1000_700":"https://auth.robokassa.ru/merchant/Invoice/DmoYe-tFck2JpHjLsb4s6g",
+  "0_1000_1500":"https://auth.robokassa.ru/merchant/Invoice/ttSuxEu0FUaqQsr_sacIgw",
+  "0_2500_0":"https://auth.robokassa.ru/merchant/Invoice/fdn5fr_zMUWyCB-gXNu69Q",
+  "0_2500_700":"https://auth.robokassa.ru/merchant/Invoice/uRHU1zjAeUWxMTNl9PyOFw",
+  "0_2500_1500":"https://auth.robokassa.ru/merchant/Invoice/rASVfkr-yEuf6WNQjnDsCQ",
+  // П2-О4 (Пакет 2, Окно 4)
+  "1_0_0":"https://auth.robokassa.ru/merchant/Invoice/irc0FtWv9UGR-skwTC0wxg",
+  "1_0_700":"https://auth.robokassa.ru/merchant/Invoice/cG9_kLEE0ki6wLzKNtUA7A",
+  "1_0_1500":"https://auth.robokassa.ru/merchant/Invoice/-Zy1uAwTe0S1HhRyRoZ_Ig",
+  "1_0_2200":"https://auth.robokassa.ru/merchant/Invoice/hhmoq2rhp0GNExZF7kp_eA",
+  "1_250_0":"https://auth.robokassa.ru/merchant/Invoice/75ahoLUSS0CGdoVIL1_RjQ",
+  "1_250_700":"https://auth.robokassa.ru/merchant/Invoice/Idy7sDR8fEerBprvXRxkyw",
+  "1_250_1500":"https://auth.robokassa.ru/merchant/Invoice/FZSvi71h1kCg9uHJUyXFdA",
+  "1_250_2200":"https://auth.robokassa.ru/merchant/Invoice/x3GzsN5W3E65PHxLn4p-9A",
+  "1_500_0":"https://auth.robokassa.ru/merchant/Invoice/EYFHfbJ7Mkmi5vEyLZnLnQ",
+  "1_500_700":"https://auth.robokassa.ru/merchant/Invoice/xTxEz31sJ0itgj3v4LO7rg",
+  "1_500_1500":"https://auth.robokassa.ru/merchant/Invoice/RvQVyKUTy0SV9u4k0uFHHQ",
+  "1_500_2200":"https://auth.robokassa.ru/merchant/Invoice/YZ90fkJz5kyFol23L5VefQ",
+  "1_1000_0":"https://auth.robokassa.ru/merchant/Invoice/_tCHNZShJEuLYKBuiyfy1Q",
+  "1_1000_700":"https://auth.robokassa.ru/merchant/Invoice/Sy-5VJOLu0OVDmCduV9xow",
+  "1_1000_1500":"https://auth.robokassa.ru/merchant/Invoice/C_nG3oACvUG1F5E7uz40Yw",
+  "1_1000_2200":"https://auth.robokassa.ru/merchant/Invoice/yupeRvzQUEa17RvwayIpeg",
+  "1_2500_0":"https://auth.robokassa.ru/merchant/Invoice/MaNyob-i10GZVShTIZK6BQ",
+  "1_2500_700":"https://auth.robokassa.ru/merchant/Invoice/6RaML01rF0KShzEGhWKO5Q",
+  "1_2500_1500":"https://auth.robokassa.ru/merchant/Invoice/jixyIyCznkqkMnq0n6nwrw",
+  "1_2500_2200":"https://auth.robokassa.ru/merchant/Invoice/dABnZc1ZeUqlMZDYNVZ2cQ",
+  // П3-О4 (Пакет 3, Окно 4)
+  "2_0_0":"https://auth.robokassa.ru/merchant/Invoice/JJB5OmbGv0Gu0lCdiIO8eA",
+  "2_0_700":"https://auth.robokassa.ru/merchant/Invoice/znBlGhp-4kOARL5Ol6o9Kg",
+  "2_0_1500":"https://auth.robokassa.ru/merchant/Invoice/8zw8qqPuKkaXzzOCYtZoLA",
+  "2_0_2200":"https://auth.robokassa.ru/merchant/Invoice/jbJw81O-6kWAhTPGjOIaBQ",
+  "2_250_0":"https://auth.robokassa.ru/merchant/Invoice/m_bLYSf-FEmXvShAnGDgzg",
+  "2_250_700":"https://auth.robokassa.ru/merchant/Invoice/CEhsoFhmc0mviqJH3pH8_A",
+  "2_250_1500":"https://auth.robokassa.ru/merchant/Invoice/144fDl-uj0uBGJZyWKqikA",
+  "2_250_2200":"https://auth.robokassa.ru/merchant/Invoice/tWymJ3IbzkWM7AaOkevIfg",
+  "2_500_0":"https://auth.robokassa.ru/merchant/Invoice/-7rQrh9hEEiXLRQDRQ83zw",
+  "2_500_700":"https://auth.robokassa.ru/merchant/Invoice/BbI79768z0uiDxKLdH83iA",
+  "2_500_1500":"https://auth.robokassa.ru/merchant/Invoice/L2ZcX93M302eNAmjbrVxzg",
+  "2_500_2200":"https://auth.robokassa.ru/merchant/Invoice/1G5kmnmNvUyBzjgLAhJg-w",
+  "2_1000_0":"https://auth.robokassa.ru/merchant/Invoice/10K4GVctSU-2qj8MibdtGg",
+  "2_1000_700":"https://auth.robokassa.ru/merchant/Invoice/5_qFy2t34UyNOchLnlzUXA",
+  "2_1000_1500":"https://auth.robokassa.ru/merchant/Invoice/kZTb0q7dj0uPvw3dUu1E0w",
+  "2_1000_2200":"https://auth.robokassa.ru/merchant/Invoice/s7rF2agSIUiYYJ3fg4SBtQ",
+  "2_2500_0":"https://auth.robokassa.ru/merchant/Invoice/Jb5vbSAJMkGXtdNo_RMPkA",
+  "2_2500_700":"https://auth.robokassa.ru/merchant/Invoice/rsoGroH0ckWhFkJpyjGCAQ",
+  "2_2500_1500":"https://auth.robokassa.ru/merchant/Invoice/wB-pRw0nS0u1HDWKlJBasg",
+  "2_2500_2200":"https://auth.robokassa.ru/merchant/Invoice/ceRIWOxKj0irqpQqCWHqCg"
 };
 const PAYMENT_LINKS_EUR = {
-  // П1-О3 (Пакет 1, Окно 3)
-  "0_0_0":"https://buy.stripe.com/4gM00jcG378pggv2Mg8Ra31",
-  "0_0_16":"https://buy.stripe.com/dRm00jfSfakBe8n0E88Ra3b",
-  "0_0_8":"https://buy.stripe.com/cNi14ncG33Wd9S7gD68Ra36",
-  "0_11_0":"https://buy.stripe.com/6oUbJ1dK73Wd4xNfz28Ra34",
-  "0_11_16":"https://buy.stripe.com/8x2bJ149x9gxc0ffz28Ra3e",
-  "0_11_8":"https://buy.stripe.com/7sY28raxVeAR8O3gD68Ra39",
-  "0_27_0":"https://buy.stripe.com/dRm9AT49x78pfcr2Mg8Ra35",
-  "0_27_16":"https://buy.stripe.com/14AfZhdK73Wdd4jbiM8Ra3f",
-  "0_27_8":"https://buy.stripe.com/00w3cv5dBeAR0hx5Ys8Ra3a",
-  "0_3_0":"https://buy.stripe.com/28E4gz7lJ78p7JZ72w8Ra32",
-  "0_3_16":"https://buy.stripe.com/9B63cv5dB50h3tJ2Mg8Ra3c",
-  "0_3_8":"https://buy.stripe.com/6oU00j9tRdwN2pF72w8Ra37",
-  "0_5_0":"https://buy.stripe.com/00weVd6hF3Wd8O35Ys8Ra33",
-  "0_5_16":"https://buy.stripe.com/cNiaEXdK78ctaWb4Uo8Ra3d",
-  "0_5_8":"https://buy.stripe.com/7sY4gzaxVdwN5BRgD68Ra38",
-  // П2-О3 (Пакет 2, Окно 3)
-  "1_0_0":"https://buy.stripe.com/7sY14ncG30K1e8neuY8Ra3g",
-  "1_0_16":"https://buy.stripe.com/28EcN549xboFc0f4Uo8Ra3q",
-  "1_0_24":"https://buy.stripe.com/dRmdR9axVeAR2pF72w8Ra3v",
-  "1_0_8":"https://buy.stripe.com/cNi9AT9tR8ct3tJgD68Ra3l",
-  "1_11_0":"https://buy.stripe.com/bJedR9eOb9gx4xN1Ic8Ra3j",
-  "1_11_16":"https://buy.stripe.com/6oUcN535t50h2pF1Ic8Ra3t",
-  "1_11_24":"https://buy.stripe.com/00w28r6hF3Wd1lBdqU8Ra3y",
-  "1_11_8":"https://buy.stripe.com/3cI00j0XlcsJ8O3dqU8Ra3o",
-  "1_27_0":"https://buy.stripe.com/5kQdR9gWj50h8O31Ic8Ra3k",
-  "1_27_16":"https://buy.stripe.com/3cI00j8pN8ct4xN3Qk8Ra3u",
-  "1_27_24":"https://buy.stripe.com/4gM6oH7lJ0K13tJ2Mg8Ra3z",
-  "1_27_8":"https://buy.stripe.com/8x28wPdK7gIZaWb0E88Ra3p",
-  "1_3_0":"https://buy.stripe.com/00waEX9tR8ct3tJ5Ys8Ra3h",
-  "1_3_16":"https://buy.stripe.com/9B68wP35t8ct1lBbiM8Ra3r",
-  "1_3_24":"https://buy.stripe.com/6oU6oH35tcsJd4jbiM8Ra3w",
-  "1_3_8":"https://buy.stripe.com/3cI6oH5dBfEV1lBbiM8Ra3m",
-  "1_5_0":"https://buy.stripe.com/14A9AT0Xl78pe8naeI8Ra3i",
-  "1_5_16":"https://buy.stripe.com/8x24gz21p3Wd1lBdqU8Ra3s",
-  "1_5_24":"https://buy.stripe.com/cNi8wPgWj50hd4jfz28Ra3x",
-  "1_5_8":"https://buy.stripe.com/8x25kD35t64l5BRgD68Ra3n",
-  // П3-О3 (Пакет 3, Окно 3)
-  "2_0_0":"https://buy.stripe.com/aFadR9dK78ctd4jbiM8Ra3A",
-  "2_0_16":"https://buy.stripe.com/cNi7sL35t2S92pF2Mg8Ra3K",
-  "2_0_24":"https://buy.stripe.com/14A9ATcG3akBe8n0E88Ra3P",
-  "2_0_8":"https://buy.stripe.com/eVq9ATeOb78pfcr86A8Ra3F",
-  "2_11_0":"https://buy.stripe.com/aFa14ncG31O5c0faeI8Ra3D",
-  "2_11_16":"https://buy.stripe.com/3cI5kD21p2S90hx72w8Ra3N",
-  "2_11_24":"https://buy.stripe.com/7sYfZh7lJ78pd4j3Qk8Ra3S",
-  "2_11_8":"https://buy.stripe.com/fZu14ngWj0K1fcr86A8Ra3I",
-  "2_27_0":"https://buy.stripe.com/aFa6oHeOb3Wd8O33Qk8Ra3E",
-  "2_27_16":"https://buy.stripe.com/8x2bJ149x78p1lB72w8Ra3O",
-  "2_27_24":"https://buy.stripe.com/28EaEX6hFdwNe8neuY8Ra3T",
-  "2_27_8":"https://buy.stripe.com/9B6aEXcG33Wd3tJ4Uo8Ra3J",
-  "2_3_0":"https://buy.stripe.com/5kQcN59tRakB7JZ5Ys8Ra3B",
-  "2_3_16":"https://buy.stripe.com/9B63cv21pakBd4j1Ic8Ra3L",
-  "2_3_24":"https://buy.stripe.com/9B68wPbBZ0K1aWb3Qk8Ra3Q",
-  "2_3_8":"https://buy.stripe.com/28E4gz21pdwN4xNbiM8Ra3G",
-  "2_5_0":"https://buy.stripe.com/6oU4gz6hF3Wd3tJ72w8Ra3C",
-  "2_5_16":"https://buy.stripe.com/7sYfZhaxV0K1c0faeI8Ra3M",
-  "2_5_24":"https://buy.stripe.com/3cIdR9dK73Wd7JZcmQ8Ra3R",
-  "2_5_8":"https://buy.stripe.com/7sYbJ121p78pfcrdqU8Ra3H",
-  // Алиасы для совместимости
-  "1_0_27":"https://buy.stripe.com/dRmdR9axVeAR2pF72w8Ra3v",
-  "1_3_27":"https://buy.stripe.com/6oU6oH35tcsJd4jbiM8Ra3w",
-  "1_5_27":"https://buy.stripe.com/cNi8wPgWj50hd4jfz28Ra3x",
-  "1_11_27":"https://buy.stripe.com/00w28r6hF3Wd1lBdqU8Ra3y",
-  "1_27_27":"https://buy.stripe.com/4gM6oH7lJ0K13tJ2Mg8Ra3z",
-  "2_0_27":"https://buy.stripe.com/14A9ATcG3akBe8n0E88Ra3P",
-  "2_3_27":"https://buy.stripe.com/9B68wPbBZ0K1aWb3Qk8Ra3Q",
-  "2_5_27":"https://buy.stripe.com/3cIdR9dK73Wd7JZcmQ8Ra3R",
-  "2_11_27":"https://buy.stripe.com/7sYfZh7lJ78pd4j3Qk8Ra3S",
-  "2_27_27":"https://buy.stripe.com/28EaEX6hFdwNe8neuY8Ra3T"
+  // П1-О4 (Пакет 1, Окно 4)
+  "0_0_0":"https://buy.stripe.com/6oUeVdfSf78p5BRgD68Ra3U",
+  "0_0_8":"https://buy.stripe.com/00w9AT6hFdwN1lB9aE8Ra40",
+  "0_0_16":"https://buy.stripe.com/fZucN5fSffEV0hx1Ic8Ra45",
+  "0_3_0":"https://buy.stripe.com/eVq00jcG33Wd5BRbiM8Ra3V",
+  "0_3_8":"https://buy.stripe.com/4gMeVdbBZ8ctaWb3Qk8Ra41",
+  "0_3_16":"https://buy.stripe.com/eVq5kDgWj3WdaWbgD68Ra46",
+  "0_5_0":"https://buy.stripe.com/8x27sL6hF9gx3tJeuY8Ra3W",
+  "0_5_8":"https://buy.stripe.com/3cIeVdfSf2S9c0fbiM8Ra42",
+  "0_5_16":"https://buy.stripe.com/28E28rdK764l9S7gD68Ra47",
+  "0_11_0":"https://buy.stripe.com/8x24gz9tReAR4xNdqU8Ra3X",
+  "0_11_8":"https://buy.stripe.com/9B6dR9cG3eARggveuY8Ra43",
+  "0_11_16":"https://buy.stripe.com/14A8wP9tR9gxe8nbiM8Rb00",
+  "0_27_0":"https://buy.stripe.com/4gM28r35teARfcrfz28Ra3Y",
+  "0_27_8":"https://buy.stripe.com/28E4gz0Xl2S9fcrbiM8Ra44",
+  "0_27_16":"https://buy.stripe.com/bJe3cv49xakB5BR72w8Rb01",
+  // П2-О4 (Пакет 2, Окно 4)
+  "1_0_0":"https://buy.stripe.com/cNi3cvgWj2S96FVfz28Rb02",
+  "1_0_8":"https://buy.stripe.com/8x28wPcG38ct3tJ9aE8Rb07",
+  "1_0_16":"https://buy.stripe.com/28E5kDgWj3Wd0hx86A8Rb0c",
+  "1_0_24":"https://buy.stripe.com/4gMcN55dB64l1lBdqU8Rb0h",
+  "1_3_0":"https://buy.stripe.com/9B68wPbBZcsJ2pF72w8Rb03",
+  "1_3_8":"https://buy.stripe.com/bJeaEX7lJ3Wd8O35Ys8Rb08",
+  "1_3_16":"https://buy.stripe.com/fZucN59tR1O59S7dqU8Rb0d",
+  "1_3_24":"https://buy.stripe.com/eVqaEXcG32S9ggv86A8Rb0i",
+  "1_5_0":"https://buy.stripe.com/00w14n9tR3Wd1lBbiM8Rb04",
+  "1_5_8":"https://buy.stripe.com/dRm3cv0Xl64l8O3fz28Rb09",
+  "1_5_16":"https://buy.stripe.com/3cI7sL21p3Wd8O3aeI8Rb0e",
+  "1_5_24":"https://buy.stripe.com/dRmbJ1cG3akB9S7euY8Rb0j",
+  "1_11_0":"https://buy.stripe.com/3cI3cvdK79gxfcrdqU8Rb05",
+  "1_11_8":"https://buy.stripe.com/3cI8wP21pakB4xN1Ic8Rb0a",
+  "1_11_16":"https://buy.stripe.com/7sYbJ149x64l7JZ3Qk8Rb0f",
+  "1_11_24":"https://buy.stripe.com/7sYeVdgWj64laWbdqU8Rb0k",
+  "1_27_0":"https://buy.stripe.com/14A7sL0Xl50h6FVfz28Rb06",
+  "1_27_8":"https://buy.stripe.com/8x24gzaxV9gx7JZaeI8Rb0b",
+  "1_27_16":"https://buy.stripe.com/3cIdR9gWj0K11lB3Qk8Rb0g",
+  "1_27_24":"https://buy.stripe.com/7sY6oH5dB0K1ggvdqU8Rb0l",
+  // П3-О4 (Пакет 3, Окно 4)
+  "2_0_0":"https://buy.stripe.com/3cI7sLeOb1O56FV5Ys8Rb0m",
+  "2_0_8":"https://buy.stripe.com/fZu5kD5dBcsJ8O39aE8Rb0r",
+  "2_0_16":"https://buy.stripe.com/4gM14nfSfeAR9S75Ys8Rb0w",
+  "2_0_24":"https://buy.stripe.com/6oUcN549xfEV7JZ2Mg8Rb0B",
+  "2_3_0":"https://buy.stripe.com/eVqfZheOb8ctggv2Mg8Rb0n",
+  "2_3_8":"https://buy.stripe.com/cNifZh8pN64ld4j72w8Rb0s",
+  "2_3_16":"https://buy.stripe.com/dRm00jgWj78p3tJ0E88Rb0x",
+  "2_3_24":"https://buy.stripe.com/9B68wP8pN8ctaWbbiM8Rb0C",
+  "2_5_0":"https://buy.stripe.com/7sY9ATgWj78pe8nbiM8Rb0o",
+  "2_5_8":"https://buy.stripe.com/00w00jgWj2S94xN9aE8Rb0t",
+  "2_5_16":"https://buy.stripe.com/28EdR935t2S9aWbgD68Rb0y",
+  "2_5_24":"https://buy.stripe.com/3cIeVdbBZ50hc0fgD68Rb0D",
+  "2_11_0":"https://buy.stripe.com/fZu8wP6hF3Wd4xNbiM8Rb0p",
+  "2_11_8":"https://buy.stripe.com/8x27sL5dB8ct3tJdqU8Rb0u",
+  "2_11_16":"https://buy.stripe.com/6oU7sLdK7dwNggvfz28Rb0z",
+  "2_11_24":"https://buy.stripe.com/00w00jdK750h5BRgD68Rb0E",
+  "2_27_0":"https://buy.stripe.com/eVq3cveOb78p8O30E88Rb0q",
+  "2_27_8":"https://buy.stripe.com/bJe28r5dBgIZ5BR2Mg8Rb0v",
+  "2_27_16":"https://buy.stripe.com/cNidR97lJ0K11lBbiM8Rb0A",
+  "2_27_24":"https://buy.stripe.com/dRmaEXdK70K1c0f2Mg8Rb0F"
 };
 
 /* ============================================================
@@ -519,7 +508,8 @@ const packages = [
     windows: [
       { rub: 4900, eur: 54, disc: 49 },
       { rub: 6300, eur: 69, disc: 35 },
-      { rub: 7900, eur: 87, disc: 18 }
+      { rub: 7900, eur: 87, disc: 18 },
+      { rub: 9200, eur: 101, disc: 5 }
     ]
   },
   {
@@ -528,7 +518,8 @@ const packages = [
     windows: [
       { rub: 6900, eur: 76, disc: 62 },
       { rub: 9200, eur: 101, disc: 50 },
-      { rub: 11500, eur: 127, disc: 37 }
+      { rub: 11500, eur: 127, disc: 37 },
+      { rub: 14500, eur: 159, disc: 21 }
     ]
   },
   {
@@ -537,7 +528,8 @@ const packages = [
     windows: [
       { rub: 9500, eur: 105, disc: 66 },
       { rub: 12600, eur: 138, disc: 55 },
-      { rub: 15900, eur: 175, disc: 43 }
+      { rub: 15900, eur: 175, disc: 43 },
+      { rub: 19900, eur: 219, disc: 29 }
     ]
   }
 ];
@@ -578,7 +570,7 @@ function getWindowDeadline() {
 }
 
 
-const WINDOW3_DEADLINE = new Date('2026-08-15T23:59:00').getTime();
+const WINDOW3_DEADLINE = new Date('2026-08-21T23:59:00').getTime();
 
 function renderCountdown() {
   const el = document.getElementById('window-countdown');
@@ -590,7 +582,7 @@ function renderCountdown() {
   el.textContent = (d > 0 ? d + 'д ' : '') + h + 'ч ' + m + 'м';
 }
 setInterval(renderCountdown, 30000);
-let windowIndex = 2; // Окно 3 — жёстко задано
+let windowIndex = 3; // Окно 4 — жёстко задано
 
 /* ============================================================
    КОЛЕСО ФОРТУНЫ — СКИДКА
